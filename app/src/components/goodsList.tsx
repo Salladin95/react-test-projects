@@ -42,6 +42,9 @@ export default () => {
                 <Button variant="danger" onClick={() => filtered(pr.id)}>
                   delete
                 </Button>
+                <Button variant="primary" onClick={() => setCnt(pr.id, pr.rest)}>
+                  add all
+                </Button>
               </td>
             </tr>
           ))}

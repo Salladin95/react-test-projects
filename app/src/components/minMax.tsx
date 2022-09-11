@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { MinMaxProps } from './contracts';
 import { Button } from './button';
 
 export const MinMax = ({ min = 1, max, current, updateCnt }: MinMaxProps) => {
-  const [inputValue, setInputValue] = useState(current);
-
-  const onInput = (e: React.FormEvent<HTMLInputElement>) => setInputValue(+e.currentTarget.value);
+  const inp = useRef<HTMLInputElement>(null!);
 
   const onKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
@@ -14,30 +12,35 @@ export const MinMax = ({ min = 1, max, current, updateCnt }: MinMaxProps) => {
   };
 
   const applyCurrent = (value: number) => {
-    const validValue = Math.max(min, Math.min(max, +value));
-    setInputValue(validValue);
+    const validValue = Math.max(min, Math.min(max, value));
+    inp.current.value = validValue.toString();
     updateCnt(validValue);
   };
 
   const parseCurrentStr = (): void => {
-    applyCurrent(isNaN(inputValue) ? min : inputValue);
+    const value = parseInt(inp.current.value);
+    applyCurrent(isNaN(value) ? min : value);
   };
 
   const increment = () => applyCurrent(current + 1);
   const decrement = () => applyCurrent(current - 1);
 
+  useEffect(() => {
+    inp.current.value = current.toString();
+  }, [current]);
+
   return (
     <div className="buttons">
-      <Button className="btn btn-danger" innerButton="-" callback={decrement} />
+      <Button className="btn btn-danger" innerButton="-" onClick={decrement} />
       <input
         placeholder="Enter value"
         type="text"
-        value={inputValue}
-        onChange={onInput}
+        ref={inp}
+        defaultValue={current}
         onBlur={parseCurrentStr}
         onKeyPress={onKeyPress}
       />
-      <Button className="btn btn-primary" innerButton="+" callback={increment} />
+      <Button className="btn btn-primary" innerButton="+" onClick={increment} />
     </div>
   );
 };

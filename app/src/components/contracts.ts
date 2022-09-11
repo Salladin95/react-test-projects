@@ -8,7 +8,7 @@ export type MinMaxProps = {
 export type ButtonProps = {
   innerButton: string;
   className: string;
-  callback: () => void;
+  onClick: () => void;
 };
 
 export interface IGood {

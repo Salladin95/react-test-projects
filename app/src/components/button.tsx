@@ -1,9 +1,9 @@
 import React from 'react';
 import { ButtonProps } from './contracts';
 
-export const Button = ({ innerButton, className, callback }: ButtonProps) => {
+export const Button = ({ innerButton, className, onClick }: ButtonProps) => {
   return (
-    <button type="button" className={className} onClick={callback}>
+    <button type="button" className={className} onClick={onClick}>
       {innerButton}
     </button>
   );
