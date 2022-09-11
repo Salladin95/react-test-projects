@@ -1,10 +1,10 @@
 import React from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Counter } from 'components/Counter';
+import GoodsList from 'components/goodsList';
 
 function App() {
-  return <Counter max={10} />;
+  return <GoodsList />;
 }
 
 export default App;

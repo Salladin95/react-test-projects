@@ -1,6 +1,8 @@
-export type CounterProps = {
+export type MinMaxProps = {
   min?: number;
   max: number;
+  current: number;
+  updateCnt: (number: number) => void;
 };
 
 export type ButtonProps = {
@@ -8,3 +10,11 @@ export type ButtonProps = {
   className: string;
   callback: () => void;
 };
+
+export interface IGood {
+  id: number;
+  title: string;
+  price: number;
+  rest: number;
+  cnt: number;
+}
