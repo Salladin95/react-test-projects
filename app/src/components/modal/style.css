@@ -1,0 +1,12 @@
+.modalW {
+  max-width: 400px;
+  position: absolute;
+  top: 400px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.show {
+  opacity: 1;
+  pointer-events: auto;
+}

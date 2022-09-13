@@ -18,3 +18,9 @@ export interface IGood {
   rest: number;
   cnt: number;
 }
+
+export type ModalProps = {
+  showDetails: boolean;
+  onClose: () => void;
+  deleteProduct: () => void;
+};
