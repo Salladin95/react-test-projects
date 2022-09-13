@@ -5,9 +5,9 @@ import { IGood } from '../contracts';
 
 type ListItemProps = {
   goods: IGood[];
-  setCnt: (id: number, cnt: number) => void;
-  onDelete: (id: number) => void;
   total: number;
+  setCnt: (id: number, cnt: number) => void;
+  onDelete: (product: IGood) => void;
 };
 
 export default ({ goods, setCnt, onDelete, total }: ListItemProps) => {
@@ -34,11 +34,7 @@ export default ({ goods, setCnt, onDelete, total }: ListItemProps) => {
               </td>
               <td>{pr.price * pr.cnt}</td>
               <td>
-                <Button
-                  variant="danger"
-                  className="btn-delete"
-                  onClick={onDelete.bind(this, pr.id)}
-                >
+                <Button variant="danger" className="btn-delete" onClick={onDelete.bind(this, pr)}>
                   delete
                 </Button>
                 <Button variant="primary" onClick={() => setCnt(pr.id, pr.rest)}>

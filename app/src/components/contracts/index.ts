@@ -23,4 +23,5 @@ export type ModalProps = {
   showDetails: boolean;
   onClose: () => void;
   deleteProduct: () => void;
+  title: string;
 };

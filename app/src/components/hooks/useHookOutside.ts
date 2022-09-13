@@ -2,16 +2,18 @@ import React, { useEffect } from 'react';
 
 export default (el: React.MutableRefObject<HTMLDivElement>, fn: () => void) => {
   useEffect(() => {
-    const handleEvent = (e: MouseEvent) => {
+    const handleEvent = (e: Event) => {
       const target = e.target as HTMLElement;
-      if (!el.current.contains(target) && !target.matches('.btn-delete ')) {
+      if (!el.current.contains(target) && !target.matches('.btn-delete')) {
         fn();
       }
     };
-    window.addEventListener('click', handleEvent);
+    window.addEventListener('mousedown', handleEvent);
+    window.addEventListener('touchstart', handleEvent);
 
     return () => {
-      window.removeEventListener('click', handleEvent);
+      window.removeEventListener('mousedown', handleEvent);
+      window.removeEventListener('touchstart', handleEvent);
     };
-  });
+  }, [el, fn]);
 };
