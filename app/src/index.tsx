@@ -4,8 +4,6 @@ import App from './App';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
-import './App.css';
-import './components/modal/style.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 

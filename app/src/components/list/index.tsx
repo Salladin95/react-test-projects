@@ -1,19 +1,15 @@
 import React, { useState } from 'react';
-import productsStub from '../store';
-import Modal from '../modal';
 import TableBody from './tableBody';
-import { IGood } from '../contracts';
+import { GoodListProps, IGood } from '../contracts';
+import { Button } from 'react-bootstrap';
 
-export default () => {
-  const [goods, setProducts] = useState(productsStub());
+export default ({ updatePage, goods, total, setProducts }: GoodListProps) => {
   const [showDetails, setShopwDetails] = useState(false);
   const [product, setProduct] = useState<null | IGood>(null);
 
-  const total = goods.reduce((acc, current) => acc + current.price * current.cnt, 0);
-
-  const filtered = () => {
+  /* const filtered = () => {
     setProducts(goods.filter((good) => good.id !== product?.id));
-  };
+  }; */
 
   const toggleShowDetails = (isShow: boolean) => {
     setShopwDetails(isShow);
@@ -39,13 +35,14 @@ export default () => {
 
   return (
     <div className="some">
-      <TableBody goods={goods} setCnt={setCnt} onDelete={onDelete} total={total} />
-      <Modal
-        title={product?.title as string}
-        showDetails={showDetails}
-        deleteProduct={filtered}
-        onClose={toggleShowDetails.bind(this, false)}
-      />
+      <TableBody goods={goods} setCnt={setCnt} onDelete={onDelete} />
+      <hr />
+      <strong>total: $ {total}</strong>
+      <hr />
+      <Button variant="success" onClick={updatePage.bind(this, 'form')}>
+        Sumbit
+      </Button>
+      <hr />
     </div>
   );
 };

@@ -1,19 +1,20 @@
-import React from 'react';
-import { MinMax } from '../minMax';
-import { Button } from 'react-bootstrap';
+import React, { useContext } from 'react';
 import { IGood } from '../contracts';
+import ListItem from './listItem';
+import SettingsContext from '../../components/context/settings';
 
 type ListItemProps = {
   goods: IGood[];
-  total: number;
   setCnt: (id: number, cnt: number) => void;
   onDelete: (product: IGood) => void;
 };
 
-export default ({ goods, setCnt, onDelete, total }: ListItemProps) => {
+export default ({ goods, setCnt, onDelete }: ListItemProps) => {
+  const settings = useContext(SettingsContext);
   return (
     <>
-      <h1>goods list</h1>
+      <h1>{settings.lang === 'ru' ? 'Корзина' : 'Cart'}</h1>
+      <hr />
       <table>
         <tbody>
           <tr>
@@ -24,29 +25,9 @@ export default ({ goods, setCnt, onDelete, total }: ListItemProps) => {
             <th>Total</th>
             <th>Action</th>
           </tr>
-          {goods.map((pr, i) => (
-            <tr key={pr.id}>
-              <td>{i + 1}</td>
-              <td>{pr.title}</td>
-              <td>{pr.price}</td>
-              <td>
-                <MinMax max={pr.rest} current={pr.cnt} updateCnt={(cnt) => setCnt(pr.id, cnt)} />
-              </td>
-              <td>{pr.price * pr.cnt}</td>
-              <td>
-                <Button variant="danger" className="btn-delete" onClick={onDelete.bind(this, pr)}>
-                  delete
-                </Button>
-                <Button variant="primary" onClick={() => setCnt(pr.id, pr.rest)}>
-                  add all
-                </Button>
-              </td>
-            </tr>
-          ))}
+          <ListItem goods={goods} setCnt={setCnt} onDelete={onDelete} />
         </tbody>
       </table>
-      <hr />
-      <strong>total: $ {total}</strong>
     </>
   );
 };
