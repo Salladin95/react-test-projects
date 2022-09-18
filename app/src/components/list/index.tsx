@@ -1,37 +1,43 @@
 import React, { useState } from 'react';
 import TableBody from './tableBody';
-import { GoodListProps, IGood } from '../contracts';
 import { Button } from 'react-bootstrap';
+import MyModal from '../modal';
+import { GoodListProps } from './contracts';
+import { IGood } from 'components/contracts';
 
-export default ({ updatePage, goods, total, setProducts }: GoodListProps) => {
-  const [showDetails, setShopwDetails] = useState(false);
+export default ({
+  updatePage,
+  goods,
+  total,
+  setProducts,
+  toggleShowDetails,
+  showDetails,
+}: GoodListProps) => {
   const [product, setProduct] = useState<null | IGood>(null);
 
-  /* const filtered = () => {
+  const filtered = () => {
     setProducts(goods.filter((good) => good.id !== product?.id));
-  }; */
-
-  const toggleShowDetails = (isShow: boolean) => {
-    setShopwDetails(isShow);
   };
 
   const onDelete = (newProduct: IGood) => {
     if (!product) {
       setProduct(newProduct);
-      toggleShowDetails(!showDetails);
+      toggleShowDetails();
     } else if (product.id !== newProduct.id) {
       if (!showDetails) {
-        toggleShowDetails(!showDetails);
+        toggleShowDetails();
       }
       setProduct(newProduct);
     } else {
-      toggleShowDetails(!showDetails);
+      toggleShowDetails();
     }
   };
 
   const setCnt = (id: number, cnt: number) => {
     setProducts(goods.map((pr) => (pr.id != id ? pr : { ...pr, cnt })));
   };
+
+  const modalTitle = `Are you sure?`;
 
   return (
     <div className="some">
@@ -43,6 +49,16 @@ export default ({ updatePage, goods, total, setProducts }: GoodListProps) => {
         Sumbit
       </Button>
       <hr />
+      <MyModal
+        onClose={toggleShowDetails}
+        onOkay={filtered}
+        isShow={showDetails}
+        title={modalTitle}
+      >
+        <h3>
+          Product <strong>{product?.title}</strong> will removed from cart.
+        </h3>
+      </MyModal>
     </div>
   );
 };

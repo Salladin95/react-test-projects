@@ -1,5 +1,5 @@
 import React from 'react';
-import { ButtonProps } from '../contracts';
+import { ButtonProps } from './contracts';
 
 export const Button = ({ innerButton, className, onClick }: ButtonProps) => {
   return (

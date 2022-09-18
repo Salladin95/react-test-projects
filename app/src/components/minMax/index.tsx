@@ -1,6 +1,6 @@
 import { Button } from 'components/button/';
-import { MinMaxProps } from 'components/contracts/';
 import React, { useRef, useEffect } from 'react';
+import { MinMaxProps } from './contracts';
 
 export const MinMax = ({ min = 1, max, current, updateCnt }: MinMaxProps) => {
   const inp = useRef<HTMLInputElement>(null!);

@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
-import { ResultProps } from 'components/contracts';
+import { Button } from 'react-bootstrap';
 import SettingsContext from '../../components/context/settings';
+import { ResultProps } from './contracts';
 
-export default ({ personalData, amountOfItems, total }: ResultProps) => {
+export default ({ personalData, amountOfItems, total, updatePage }: ResultProps) => {
   const settings = useContext(SettingsContext);
   const txtRu = 'Результат для: ';
   const txtEn = 'Result for: ';
@@ -17,6 +18,10 @@ export default ({ personalData, amountOfItems, total }: ResultProps) => {
       <h4>Your email is: {personalData.email}</h4>
       <h3>There are {amountOfItems} items in cart</h3>
       <h3>total: ${total}</h3>
+      <hr />
+      <Button variant="primary" onClick={updatePage.bind(this, '/')}>
+        Back to main page
+      </Button>
     </div>
   );
 };
