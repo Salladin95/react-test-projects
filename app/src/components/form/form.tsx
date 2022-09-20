@@ -1,9 +1,15 @@
 import React, { useRef, useState } from 'react';
 import Form from 'react-bootstrap/Form';
-import { InputProps } from './contracts';
+import { FormValueOption, InputProps } from './contracts';
+import { observer } from 'mobx-react-lite';
+import { FormData } from 'components/store/form';
+import useStore from 'components/hooks/useStore';
 
-export default ({ formType, field, updateUserData }: InputProps) => {
+export default observer(({ formType, field }: InputProps) => {
   const inputEl = useRef<HTMLInputElement>(null!);
+
+  const [formData] = useStore('formData');
+  const { updateField } = formData as FormData;
 
   const [error, setError] = useState('');
   const errInpClass = 'border border-danger';
@@ -16,7 +22,7 @@ export default ({ formType, field, updateUserData }: InputProps) => {
       setError(field.errMsg);
     }
     const newValue = valid ? inputEl.current.value.trim() : '';
-    updateUserData(field.name, newValue, valid);
+    updateField(field.name as FormValueOption, newValue);
   };
 
   const onKeyPress = (e: React.KeyboardEvent) => {
@@ -45,4 +51,4 @@ export default ({ formType, field, updateUserData }: InputProps) => {
       </Form.Group>
     </Form>
   );
-};
+});

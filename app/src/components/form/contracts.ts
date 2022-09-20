@@ -1,12 +1,9 @@
-import { RouteOption, UpdateValueFn } from 'components/contracts';
+import { RouteOption } from 'components/contracts';
 
 export type MyFormProps = {
   updatePage: (page: RouteOption) => void;
-  updateUserData: UpdateValueFn;
-  orderForm: IForm;
   showDetails: boolean;
   toggleShowDetails: () => void;
-  orderData: Record<FormValueOption, string>;
 };
 
 export type IField = {
@@ -22,7 +19,6 @@ export type IForm = IField[];
 
 export type InputProps = {
   formType: string;
-  updateUserData: UpdateValueFn;
   field: IField;
 };
 

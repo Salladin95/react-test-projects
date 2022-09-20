@@ -4,19 +4,17 @@ import { Button } from 'react-bootstrap';
 import MyModal from '../modal';
 import { GoodListProps } from './contracts';
 import { IGood } from 'components/contracts';
+import { observer } from 'mobx-react-lite';
+import useStore from 'components/hooks/useStore';
+import { Cart } from 'components/store';
 
-export default ({
-  updatePage,
-  goods,
-  total,
-  setProducts,
-  toggleShowDetails,
-  showDetails,
-}: GoodListProps) => {
-  const [product, setProduct] = useState<null | IGood>(null);
+export default observer(({ updatePage, toggleShowDetails, showDetails }: GoodListProps) => {
+  const [product, setProduct] = useState<IGood>(null!);
+  const [cart] = useStore('cart');
+  const { products: goods, total, remove, change } = cart as Cart;
 
   const filtered = () => {
-    setProducts(goods.filter((good) => good.id !== product?.id));
+    remove(product.id);
   };
 
   const onDelete = (newProduct: IGood) => {
@@ -33,15 +31,11 @@ export default ({
     }
   };
 
-  const setCnt = (id: number, cnt: number) => {
-    setProducts(goods.map((pr) => (pr.id != id ? pr : { ...pr, cnt })));
-  };
-
   const modalTitle = `Are you sure?`;
 
   return (
     <div className="some">
-      <TableBody goods={goods} setCnt={setCnt} onDelete={onDelete} />
+      <TableBody goods={goods} setCnt={change} onDelete={onDelete} />
       <hr />
       <strong>total: $ {total}</strong>
       <hr />
@@ -61,4 +55,4 @@ export default ({
       </MyModal>
     </div>
   );
-};
+});

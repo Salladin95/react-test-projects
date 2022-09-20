@@ -1,19 +1,18 @@
 import React, { useContext } from 'react';
 import MyForm from './form';
 import { Button } from 'react-bootstrap';
-import SettingsContext from '../../components/context/settings';
+import SettingsContext from '../contexts/settings';
 import { MyFormProps } from './contracts';
 import MyModal from '../modal';
+import { observer } from 'mobx-react-lite';
+import useStore from 'components/hooks/useStore';
+import { FormData } from 'components/store/form';
 
-export default ({
-  updatePage,
-  updateUserData,
-  orderForm,
-  showDetails,
-  toggleShowDetails,
-  orderData,
-}: MyFormProps) => {
+export default observer(({ updatePage, showDetails, toggleShowDetails }: MyFormProps) => {
   const getInputType = (value: string) => (value === 'email' ? 'email' : 'text');
+
+  const [formData] = useStore('formData');
+  const { orderData, orderForm } = formData as FormData;
 
   const isDisable = orderForm.every((field) => field.valid);
   const settings = useContext(SettingsContext);
@@ -41,12 +40,7 @@ export default ({
       <h1>{settings.lang === 'ru' ? 'Форма' : 'Form'}</h1>
       <hr />
       {orderForm.map((field) => (
-        <MyForm
-          formType={getInputType(field.name)}
-          field={field}
-          key={field.name}
-          updateUserData={updateUserData}
-        />
+        <MyForm formType={getInputType(field.name)} field={field} key={field.name} />
       ))}
       <div>
         <Button variant="secondary" onClick={updatePage.bind(this, '/')}>
@@ -66,4 +60,4 @@ export default ({
       </MyModal>
     </div>
   );
-};
+});

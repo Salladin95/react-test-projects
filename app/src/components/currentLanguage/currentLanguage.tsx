@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import Button from 'react-bootstrap/esm/Button';
 import { CurrentLanguageProps } from '../contracts';
-import SettingsContext from '../context/settings';
+import SettingsContext from '../contexts/settings';
 
 export default ({ updateCurrentLanguage }: CurrentLanguageProps) => {
   const settings = useContext(SettingsContext);
