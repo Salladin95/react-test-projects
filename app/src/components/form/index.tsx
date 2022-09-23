@@ -1,37 +1,51 @@
 import React, { useContext } from 'react';
 import MyForm from './form';
 import { Button } from 'react-bootstrap';
-import SettingsContext from '../contexts/settings';
+import SettingsContext from '../../contexts/settings';
 import { MyFormProps } from './contracts';
 import MyModal from '../modal';
 import { observer } from 'mobx-react-lite';
-import useStore from 'components/hooks/useStore';
-import { FormData } from 'components/store/form';
+import useStore from '../../hooks/useStore';
+import FormData from 'store/form';
+import { Link, useNavigate } from 'react-router-dom';
+import Cart from 'store/cart';
 
-export default observer(({ updatePage, showDetails, toggleShowDetails }: MyFormProps) => {
+export default observer(({ showDetails, toggleShowDetails }: MyFormProps) => {
   const getInputType = (value: string) => (value === 'email' ? 'email' : 'text');
-
-  const [formData] = useStore('formData');
+  const navigate = useNavigate();
+  const [formData, cart] = useStore('formData', 'cart');
   const { orderData, orderForm } = formData as FormData;
 
-  const isDisable = orderForm.every((field) => field.valid);
+  const { clear } = cart as Cart;
+
+  const isDisable = Object.values(orderForm).every((field) => field.valid);
   const settings = useContext(SettingsContext);
 
   const goToResult = () => {
-    updatePage('result');
+    navigate('/result');
+    clear();
   };
 
   const children = (
     <>
-      <p>
-        Your name is <strong>{orderData.name}.</strong>
+      <div>
+        <p>
+          Your name is <strong>{orderData.name}.</strong>
+        </p>
         <hr />
-        Your email is <strong>{orderData.email}.</strong>
+        <p>
+          Your email is <strong>{orderData.email}.</strong>
+        </p>
         <hr />
-        Your phone is <strong>{orderData.phone}.</strong>
+        <p>
+          Your phone is <strong>{orderData.phone}.</strong>
+        </p>
         <hr />
-        If everything okay click <strong>Yes</strong> and we&apos;ll send you detailed information.
-      </p>
+        <p>
+          If everything okay click <strong>Yes</strong> and we&apos;ll send you detailed
+          information.
+        </p>
+      </div>
     </>
   );
 
@@ -39,13 +53,13 @@ export default observer(({ updatePage, showDetails, toggleShowDetails }: MyFormP
     <div className="container">
       <h1>{settings.lang === 'ru' ? 'Форма' : 'Form'}</h1>
       <hr />
-      {orderForm.map((field) => (
+      {Object.values(orderForm).map((field) => (
         <MyForm formType={getInputType(field.name)} field={field} key={field.name} />
       ))}
       <div>
-        <Button variant="secondary" onClick={updatePage.bind(this, '/')}>
+        <Link className="btn btn-secondary" to={'/'}>
           previous
-        </Button>
+        </Link>
         <Button variant="primary" disabled={!isDisable} onClick={toggleShowDetails}>
           next
         </Button>

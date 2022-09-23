@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import TableBody from './tableBody';
-import { Button } from 'react-bootstrap';
-import MyModal from '../modal';
+import MyModal from '../../components/modal';
 import { GoodListProps } from './contracts';
 import { IGood } from 'components/contracts';
 import { observer } from 'mobx-react-lite';
-import useStore from 'components/hooks/useStore';
-import { Cart } from 'components/store';
+import useStore from '../../hooks/useStore';
+import Cart from 'store/cart';
+import { Link } from 'react-router-dom';
 
-export default observer(({ updatePage, toggleShowDetails, showDetails }: GoodListProps) => {
+export default observer(({ toggleShowDetails, showDetails }: GoodListProps) => {
   const [product, setProduct] = useState<IGood>(null!);
-  const [cart] = useStore('cart');
-  const { products: goods, total, remove, change } = cart as Cart;
+  const [cart] = useStore('cart', 'products');
+  const { goods, total, remove, change } = cart as Cart;
 
   const filtered = () => {
     remove(product.id);
@@ -39,9 +39,9 @@ export default observer(({ updatePage, toggleShowDetails, showDetails }: GoodLis
       <hr />
       <strong>total: $ {total}</strong>
       <hr />
-      <Button variant="success" onClick={updatePage.bind(this, 'form')}>
+      <Link to={'/order'} className="btn btn-success">
         Sumbit
-      </Button>
+      </Link>
       <hr />
       <MyModal
         onClose={toggleShowDetails}

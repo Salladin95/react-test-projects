@@ -2,8 +2,8 @@ import React, { useRef, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import { FormValueOption, InputProps } from './contracts';
 import { observer } from 'mobx-react-lite';
-import { FormData } from 'components/store/form';
-import useStore from 'components/hooks/useStore';
+import FormData from 'store/form';
+import useStore from '../../hooks/useStore';
 
 export default observer(({ formType, field }: InputProps) => {
   const inputEl = useRef<HTMLInputElement>(null!);

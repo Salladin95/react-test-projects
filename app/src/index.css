@@ -28,3 +28,7 @@ code {
   top: 60px;
   left: 0;
 }
+
+.nav__link-active {
+  color: red;
+}

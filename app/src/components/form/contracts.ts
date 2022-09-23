@@ -1,7 +1,4 @@
-import { RouteOption } from 'components/contracts';
-
 export type MyFormProps = {
-  updatePage: (page: RouteOption) => void;
   showDetails: boolean;
   toggleShowDetails: () => void;
 };

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
-import { IGood } from '../contracts';
+import { IGood } from '../../components/contracts';
 import ListItem from './listItem';
-import SettingsContext from '../contexts/settings';
+import SettingsContext from '../../contexts/settings';
 
 type ListItemProps = {
   goods: IGood[];
